@@ -9,4 +9,19 @@
 
 # Make sure your secret_key_base is kept private
 # if you're sharing your code publicly.
-Recruitment::Application.config.secret_key_base = '72f393a7836fbc1a97dff16c4cb12ab98011a8e067fc2ea0c39fd04ad2a6387edeb5021a73d310d229667bb2beafb83cfbb3ba80499c88fa7bb03e1836f1c843'
+require 'securerandom'
+
+def secure_token
+  token_file = Rails.root.join('.secret')
+  if File.exist?(token_file)
+    # Use the existing token.
+    File.read(token_file).chomp
+  else
+    # Generate a new token and store it in token_file.
+    token = SecureRandom.hex(64)
+    File.write(token_file, token)
+    token
+  end
+end
+
+Recruitment::Application.config.secret_key_base = secure_token
