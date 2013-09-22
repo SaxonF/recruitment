@@ -1,6 +1,5 @@
 Recruitment::Application.routes.draw do
 
-  get "users/new"
   root 'static_pages#home'
 
   match '/help',    to: 'static_pages#help',    via: 'get'
@@ -8,6 +7,8 @@ Recruitment::Application.routes.draw do
   match '/contact', to: 'static_pages#contact', via: 'get'
 
   match '/signup', to: 'users#new', via: 'get'
+
+  resources :users
 
   # The priority is based upon order of creation: first created -> highest priority.
   # See how all your routes lay out with "rake routes".
